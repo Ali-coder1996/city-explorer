@@ -24,10 +24,10 @@ suzan
 
 Name of feature: lab-06
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3hours
 
-Start time: _____
+Start time: 2pm
 
-Finish time: _____
+Finish time: 5pm
 
-Actual time needed to complete:
+Actual time needed to complete:2 hours
