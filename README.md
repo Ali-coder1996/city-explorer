@@ -31,3 +31,14 @@ Start time: 2pm
 Finish time: 5pm
 
 Actual time needed to complete:2 hours
+
+
+Name of feature: lab07
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
