@@ -23,3 +23,6 @@ main {
     margin-top: 10px;
     height: 55px;
 }
+img {
+    border: 1px solid rgba(0, 0, 0, 0.274);
+}
