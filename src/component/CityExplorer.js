@@ -27,6 +27,7 @@ class CityExplorer extends Component {
             cityName: e.target.value,
             showLocation: false,
             showWearther: false,
+            showError: false,
         })
     }
 
@@ -59,7 +60,7 @@ class CityExplorer extends Component {
             })
         }).catch(error => {
             this.setState({
-                showLocation: false,
+                showWearther: false,
                 errorMessageW: error.message,
                 showError: true,
             })
