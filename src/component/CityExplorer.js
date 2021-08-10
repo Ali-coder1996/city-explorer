@@ -11,43 +11,59 @@ class CityExplorer extends Component {
             cityName: '',
             lat: '',
             lon: '',
-            show: false,
-            errorMessage: '',
+            showLocation: false,
+            showWearther: false,
+            errorMessageL: '',
+            errorMessageW: '',
             showError: false,
-            vaildData:'',
-            description:'',
-            weatherData:[],
+            vaildData: '',
+            description: '',
+            city: '',
+            weatherData: [],
         }
     }
     nameHandler = (e) => {
         this.setState({
             cityName: e.target.value,
-            show:false
+            showLocation: false,
+            showWearther: false,
         })
     }
 
     submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            const locationUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_URL}&q=${this.state.cityName}&format=json`
-            const weatherUrl=`http://localhost:3005/weather?lat=31.95&lon=35.91&cityName=amman`
-            let wea=await axios.get(weatherUrl)
-            let res =await axios.get(locationUrl)
-                this.setState({
-                    cityName: res.data[0].display_name,
-                    lat: res.data[0].lat,
-                    lon: res.data[0].lon,
-                    show: true,
-                    showError: false,
-                    weatherData:wea.data
-                })
-        } catch (error) {
+
+        const locationUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_URL}&q=${this.state.cityName}&format=json`
+        await axios.get(locationUrl).then(res => {
+            console.log(res.data[0])
             this.setState({
-                show: false,
-                errorMessage: error.message,
-                showError: true
+                cityName: res.data[0].display_name,
+                lat: res.data[0].lat,
+                lon: res.data[0].lon,
+                showLocation: true,
+                showError: false,
             })
-        }           
+        }).catch(error => {
+            this.setState({
+                showLocation: false,
+                errorMessageL: error.message,
+                showError: true,
+            })
+        })
+
+        const weatherUrl = `http://localhost:8000/weather?lat=31.95&lon=35.91&cityName=amman`
+        await axios.get(weatherUrl).then(res => {
+            this.setState({
+                weatherData: res.data,
+                showWearther: true,
+            })
+        }).catch(error => {
+            this.setState({
+                showLocation: false,
+                errorMessageW: error.message,
+                showError: true,
+            })
+        })
     }
 
     render() {
@@ -56,7 +72,7 @@ class CityExplorer extends Component {
                 <div className='error'>
                     {this.state.showError &&
                         <Alert variant='danger'>
-                            {this.state.errorMessage}
+                            {this.state.errorMessageL}
                         </Alert>
                     }
                 </div>
@@ -68,8 +84,7 @@ class CityExplorer extends Component {
                 </Form>
                 <div>
                     {
-
-                        this.state.show &&
+                        this.state.showLocation &&
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -92,12 +107,19 @@ class CityExplorer extends Component {
                 </div>
 
                 <div>
+                    <div className='error'>
+                        {this.state.showError &&
+                            <Alert variant='danger'>
+                                {this.state.errorMessageW}
+                            </Alert>
+                        }
+                    </div>
                     {
-                        this.state.show &&
+                        this.state.showLocation &&
                         <img src={`https://maps.locationiq.com/v3/staticmap?key=pk.e63cb8569a409e130ba72ba6f8ab4d74&q&center=${this.state.lat},${this.state.lon}&zoom=10&size=900x450&markers=icon:large-red-cutout|${this.state.lat},${this.state.lon}|${this.state.lat},${this.state.lon}`} alt='' />
                     }
                 </div>
-                <Weather show={this.state.show} weatherData={this.state.weatherData}/>
+                <Weather show={this.state.showWearther} city={this.state.city} weatherData={this.state.weatherData} />
 
             </main>
         )
