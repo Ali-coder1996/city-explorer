@@ -34,7 +34,7 @@ class CityExplorer extends Component {
     submitHandler = async (e) => {
         e.preventDefault();
 
-        const locationUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_URL}&q=${this.state.cityName}&format=json`
+        const locationUrl = `http://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_URL}&q=${this.state.cityName}&format=json`
         await axios.get(locationUrl).then(res => {
             console.log(res.data[0])
             this.setState({
