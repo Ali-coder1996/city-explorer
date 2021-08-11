@@ -26,3 +26,12 @@ main {
 img {
     border: 1px solid rgba(0, 0, 0, 0.274);
 }
+section {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+.shadow {
+    margin-top: 20px;
+    height: 100%;
+}
