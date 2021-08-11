@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Table, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Weather from './Weather';
+import Movies from './Movies';
 
 class CityExplorer extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class CityExplorer extends Component {
             description: '',
             city: '',
             weatherData: [],
+            moviesData:[]
         }
     }
     nameHandler = (e) => {
@@ -65,6 +67,13 @@ class CityExplorer extends Component {
                 showWearther: false,
                 errorMessageW: error.message,
                 showErrorW: true,
+            })
+        })
+        const moviesName = this.state.cityName.split(',')[0]
+        const moviesYrl = `http://localhost:8000/movies?city_name=${moviesName}`
+        await axios.get(moviesYrl).then(res => {
+            this.setState({
+                moviesData: res.data,
             })
         })
     }
@@ -124,7 +133,7 @@ class CityExplorer extends Component {
                         }
                     </div>
                 <Weather show={this.state.showWearther} city={this.state.city} weatherData={this.state.weatherData} />
-
+                <Movies moviesData={this.state.moviesData} showLocation={this.state.showLocation}/>
             </main>
         )
     }
