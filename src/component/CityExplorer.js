@@ -15,7 +15,8 @@ class CityExplorer extends Component {
             showWearther: false,
             errorMessageL: '',
             errorMessageW: '',
-            showError: false,
+            showErrorL: false,
+            showErrorW: false,
             vaildData: '',
             description: '',
             city: '',
@@ -27,7 +28,8 @@ class CityExplorer extends Component {
             cityName: e.target.value,
             showLocation: false,
             showWearther: false,
-            showError: false,
+            showErrorL: false,
+            showErrorW: false,
         })
     }
 
@@ -42,19 +44,19 @@ class CityExplorer extends Component {
                 lat: res.data[0].lat,
                 lon: res.data[0].lon,
                 showLocation: true,
-                showError: false,
+                showErrorL: false,
             })
         }).catch(error => {
             this.setState({
                 showLocation: false,
                 errorMessageL: error.message,
-                showError: true,
+                showErrorL: true,
             })
         })
-
-        const weatherUrl = `http://localhost:8000/weather?lat=31.95&lon=35.91&cityName=amman`
+        const weatherUrl = `http://localhost:8000/weather?&lat=${parseInt(this.state.lat)}&lon=${parseInt(this.state.lon)}`
         await axios.get(weatherUrl).then(res => {
             this.setState({
+                showError: false,
                 weatherData: res.data,
                 showWearther: true,
             })
@@ -62,7 +64,7 @@ class CityExplorer extends Component {
             this.setState({
                 showWearther: false,
                 errorMessageW: error.message,
-                showError: true,
+                showErrorW: true,
             })
         })
     }
@@ -71,7 +73,7 @@ class CityExplorer extends Component {
         return (
             <main>
                 <div className='error'>
-                    {this.state.showError &&
+                    {this.state.showErrorL &&
                         <Alert variant='danger'>
                             {this.state.errorMessageL}
                         </Alert>
@@ -108,18 +110,19 @@ class CityExplorer extends Component {
                 </div>
 
                 <div>
-                    <div className='error'>
-                        {this.state.showError &&
-                            <Alert variant='danger'>
-                                {this.state.errorMessageW}
-                            </Alert>
-                        }
-                    </div>
+                    
                     {
                         this.state.showLocation &&
                         <img src={`https://maps.locationiq.com/v3/staticmap?key=pk.e63cb8569a409e130ba72ba6f8ab4d74&q&center=${this.state.lat},${this.state.lon}&zoom=10&size=900x450&markers=icon:large-red-cutout|${this.state.lat},${this.state.lon}|${this.state.lat},${this.state.lon}`} alt='' />
                     }
                 </div>
+                <div className='error'>
+                        {this.state.showErrorW &&
+                            <Alert variant='danger'>`
+                                {this.state.errorMessageW} Provide on of these amman and seattle`
+                            </Alert>
+                        }
+                    </div>
                 <Weather show={this.state.showWearther} city={this.state.city} weatherData={this.state.weatherData} />
 
             </main>
