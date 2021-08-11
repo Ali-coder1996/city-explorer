@@ -53,7 +53,7 @@ class CityExplorer extends Component {
                 showErrorL: true,
             })
         })
-        const weatherUrl = `http://localhost:8000/weather?&lat=${parseInt(this.state.lat)}&lon=${parseInt(this.state.lon)}`
+        const weatherUrl = `${process.env.REACT_APP_WEATHER_URL}/weather?&lat=${parseInt(this.state.lat)}&lon=${parseInt(this.state.lon)}`
         await axios.get(weatherUrl).then(res => {
             this.setState({
                 showError: false,
