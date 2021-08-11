@@ -70,7 +70,7 @@ class CityExplorer extends Component {
             })
         })
         const moviesName = this.state.cityName.split(',')[0]
-        const moviesYrl = `http://localhost:8000/movies?city_name=${moviesName}`
+        const moviesYrl = `https://heroku-api-weather.herokuapp.com/movies?city_name=${moviesName}`
         await axios.get(moviesYrl).then(res => {
             this.setState({
                 moviesData: res.data,
