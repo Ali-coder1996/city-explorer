@@ -5,7 +5,7 @@ class Weather extends Component {
         return (
             <div>
                 { 
-                    this.props.show && this.props.weatherData.map(item => {
+                    this.props.show  && this.props.weatherData.map(item => {
                         return <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -18,8 +18,6 @@ class Weather extends Component {
                                     <td>description</td>
                                     <td>{item.description}</td>
                                 </tr>
-                                
-                                
                             </tbody>
                         </Table>
                     })
