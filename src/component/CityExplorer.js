@@ -42,7 +42,6 @@ class CityExplorer extends Component {
         await axios.get(locationUrl).then(res => {
             console.log(res.data[0])
             this.setState({
-                cityName: res.data[0].display_name,
                 lat: res.data[0].lat,
                 lon: res.data[0].lon,
                 showLocation: true,
@@ -55,7 +54,7 @@ class CityExplorer extends Component {
                 showErrorL: true,
             })
         })
-        const weatherUrl = `${process.env.REACT_APP_WEATHER_URL}/weather?&lat=${parseInt(this.state.lat)}&lon=${parseInt(this.state.lon)}`
+        const weatherUrl = `http://localhost:8000/weather?city=${this.state.cityName}`
         await axios.get(weatherUrl).then(res => {
             this.setState({
                 showError: false,
@@ -69,8 +68,7 @@ class CityExplorer extends Component {
                 showErrorW: true,
             })
         })
-        
-        const moviesYrl = `${process.env.REACT_APP_WEATHER_URL}/movies?query=${this.state.cityName.split(',')[0]}`
+        const moviesYrl = `http://localhost:8000/movies?query=${this.state.cityName}`
         await axios.get(moviesYrl).then(res => {
             this.setState({
                 moviesData: res.data,
@@ -128,7 +126,7 @@ class CityExplorer extends Component {
                 <div className='error'>
                         {this.state.showErrorW &&
                             <Alert variant='danger'>`
-                                {this.state.errorMessageW} Provide on of these amman and seattle`
+                                {this.state.errorMessageW}`
                             </Alert>
                         }
                     </div>
