@@ -55,7 +55,7 @@ class CityExplorer extends Component {
                 showErrorL: true,
             })
         })
-        const weatherUrl = `http://localhost:8000/weather?city=${this.state.cityName}`
+        const weatherUrl = `https://heroku-api-weather.herokuapp.com/weather?city=${this.state.cityName}`
         await axios.get(weatherUrl).then(res => {
             this.setState({
                 showError: false,
@@ -69,7 +69,7 @@ class CityExplorer extends Component {
                 showErrorW: true,
             })
         })
-        const moviesYrl = `http://localhost:8000/movies?query=${this.state.cityName}`
+        const moviesYrl = `https://heroku-api-weather.herokuapp.com/movies?query=${this.state.cityName}`
         await axios.get(moviesYrl).then(res => {
             this.setState({
                 moviesData: res.data,
