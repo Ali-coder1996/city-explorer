@@ -3,7 +3,7 @@ import { Form, Button, Table, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Weather from './Weather';
 import Movies from './Movies';
-
+// import Yelp from './Yelp';
 class CityExplorer extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +22,8 @@ class CityExplorer extends Component {
             description: '',
             city: '',
             weatherData: [],
-            moviesData:[]
+            moviesData:[],
+            // yelpData:[]
         }
     }
     nameHandler = (e) => {
@@ -54,7 +55,7 @@ class CityExplorer extends Component {
                 showErrorL: true,
             })
         })
-        const weatherUrl = `https://heroku-api-weather.herokuapp.com/weather?city=${this.state.cityName}`
+        const weatherUrl = `http://localhost:8000/weather?city=${this.state.cityName}`
         await axios.get(weatherUrl).then(res => {
             this.setState({
                 showError: false,
@@ -68,12 +69,18 @@ class CityExplorer extends Component {
                 showErrorW: true,
             })
         })
-        const moviesYrl = `https://heroku-api-weather.herokuapp.com/movies?query=${this.state.cityName}`
+        const moviesYrl = `http://localhost:8000/movies?query=${this.state.cityName}`
         await axios.get(moviesYrl).then(res => {
             this.setState({
                 moviesData: res.data,
             })
         })
+        // const yelpUrl = `http://localhost:8000/yelp`
+        // await axios.get(yelpUrl).then(res => {
+        //     this.setState({
+        //         yelpData: res.data,
+        //     })
+        // })
     }
 
     render() {
@@ -132,6 +139,7 @@ class CityExplorer extends Component {
                     </div>
                 <Weather show={this.state.showWearther} city={this.state.city} weatherData={this.state.weatherData} />
                 <Movies moviesData={this.state.moviesData} showLocation={this.state.showLocation}/>
+                {/* <Yelp yelpData={this.state.yelpData} show={this.state.showWearther}/> */}
             </main>
         )
     }
